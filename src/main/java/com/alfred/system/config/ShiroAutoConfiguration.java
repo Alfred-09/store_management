@@ -94,6 +94,12 @@ public class ShiroAutoConfiguration {
         bean.setLoginUrl(shiroProperties.getLoginUrl());
         //注入未授权的页面地址
         bean.setUnauthorizedUrl(shiroProperties.getUnauthorizedUrl());
+//        //创建自定义filter
+//        OptionsAccessControlFilter filter=new OptionsAccessControlFilter();
+//        Map<String, Filter> map=new HashMap<>();
+//        map.put("options",filter);
+//        bean.setFilters(map);
+
         //注入过滤器
         Map<String, String> filterChainDefinition=new HashMap<>();
 
@@ -102,26 +108,23 @@ public class ShiroAutoConfiguration {
             String[] anonUrls = shiroProperties.getAnonUrls();
             for (String anonUrl : anonUrls) {
                 filterChainDefinition.put(anonUrl,"anon");
+              //  filterChainDefinition.put(anonUrl,"options");
             }
         }
         //注入登出的地址
         if(shiroProperties.getLogoutUrl()!=null){
             filterChainDefinition.put(shiroProperties.getLogoutUrl(),"logout");
+           // filterChainDefinition.put(shiroProperties.getLogoutUrl(),"options");
         }
         //注拦截的地址
         String[] authcUrls = shiroProperties.getAuthcUrls();
         if(authcUrls!=null&&authcUrls.length>0){
             for (String authcUrl : authcUrls) {
                 filterChainDefinition.put(authcUrl,"authc");
+               // filterChainDefinition.put(authcUrl,"options");
             }
         }
         bean.setFilterChainDefinitionMap(filterChainDefinition);
-//        //创建自定义filter
-//        ShiroLoginFilter filter=new ShiroLoginFilter();
-//        Map<String,Filter> map=new HashMap<>();
-//        map.put("authc",filter);
-//        bean.setFilters(map);
-
         return bean;
     }
 
