@@ -4,8 +4,10 @@ import com.alfred.system.common.ActiveUser;
 import com.alfred.system.common.Contant;
 import com.alfred.system.common.MenuTreeNode;
 import com.alfred.system.common.ResultObj;
+import com.alfred.system.domain.Loginfo;
 import com.alfred.system.domain.Menu;
 import com.alfred.system.domain.User;
+import com.alfred.system.service.LoginfoService;
 import com.alfred.system.service.MenuService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -13,26 +15,25 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 /**
  * @author Alfred
  * @date 2020/4/28 12:07
  */
 @Controller
-@CrossOrigin(allowCredentials = "true")//跨域注解
 @RequestMapping(value = "login")
 public class LoginController {
 
     @Autowired
     private MenuService menuService;
+
+    @Autowired
+    private LoginfoService loginfoService;
 
 
   /**
@@ -43,7 +44,7 @@ public class LoginController {
    */
   @RequestMapping("doLogin")
   @ResponseBody
-  public ResultObj doLogin(String loginname, String password){
+  public ResultObj doLogin(String loginname, String password, HttpServletRequest request){
 
     try {
       Subject subject = SecurityUtils.getSubject();
@@ -53,8 +54,15 @@ public class LoginController {
       //ActiveUser activeUser = (ActiveUser) subject.getPrincipal();
       //得到shiro的sessionid==token
       String token = subject.getSession().getId().toString();
-
-      System.out.println(token);
+      //记录登录日志
+      ActiveUser activeUser = (ActiveUser) subject.getPrincipal();
+      //得到用户的信息
+      User user = activeUser.getUser();
+      Loginfo loginfo = new Loginfo();
+      loginfo.setLoginname(user.getName()+"-"+user.getLoginname());
+      loginfo.setLoginip(request.getRemoteAddr());
+      loginfo.setLogintime(new Date());
+      loginfoService.save(loginfo);
       //成功的话
       return new ResultObj(200,"登录成功",token);
     } catch (AuthenticationException e) {
