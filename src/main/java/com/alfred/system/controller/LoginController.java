@@ -58,6 +58,7 @@ public class LoginController {
       ActiveUser activeUser = (ActiveUser) subject.getPrincipal();
       //得到用户的信息
       User user = activeUser.getUser();
+
       Loginfo loginfo = new Loginfo();
       loginfo.setLoginname(user.getName()+"-"+user.getLoginname());
       loginfo.setLoginip(request.getRemoteAddr());
