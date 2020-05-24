@@ -13,6 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ResultObj {
 
+    public static final ResultObj RESET_SUCCESS = new ResultObj(200,"重置成功");
+    public static final ResultObj RESET_ERROR = new ResultObj(-1,"重置成功");
+
     public static final ResultObj IS_LOGIN = new ResultObj(200,"已登录");
     public static final ResultObj UN_LOGIN = new ResultObj(-1,"未登录");
 
@@ -24,6 +27,8 @@ public class ResultObj {
 
     public static final ResultObj UPDATE_SUCCESS = new ResultObj(200,"更新成功") ;
     public static final ResultObj UPDATE_ERROR = new ResultObj(-1,"更新失败");
+    public static final ResultObj DISPATH_SUCCESS = new ResultObj(200,"分配成功");
+    public static final ResultObj DISPATH_ERROR = new ResultObj(-1,"分配失败");
 
     private Integer code=200;
     private String msg = "";

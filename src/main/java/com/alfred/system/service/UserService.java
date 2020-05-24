@@ -1,6 +1,8 @@
 package com.alfred.system.service;
 
+import com.alfred.system.common.DataGridView;
 import com.alfred.system.domain.User;
+import com.alfred.system.vo.UserVo;
 import com.baomidou.mybatisplus.extension.service.IService;
     /**
 @author  Alfred
@@ -13,6 +15,18 @@ public interface UserService extends IService<User>{
          * @param loginname
          * @return
          */
-    User queryUserByLoginName(String loginname);
+        /**
+         * 根据用户登陆名查询用户信息
+         */
+        User queryUserByLoginName(String loginname);
 
-}
+        DataGridView queryAllUser(UserVo userVo);
+
+        User saveUser(User user);
+
+        User updateUser(User user);
+
+        Integer queryUserMaxOrderNum();
+
+        void saveUserRole(Integer uid, Integer[] rids);
+    }

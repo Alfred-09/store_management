@@ -4,10 +4,11 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
 @author  Alfred
@@ -76,6 +77,13 @@ permission:menu:addMenu
      */
     @TableField(value = "ordernum")
     private Integer ordernum;
+
+//    @TableField(exist = false)
+//    private Boolean open;
+//
+//    public Boolean getOpen() {
+//        return this.spread== 1?true:false;
+//    }
 
     /**
      * 状态【0不可用1可用】

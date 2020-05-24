@@ -9,6 +9,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -38,6 +41,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
      * @param dept
      * @return
      */
+    @CachePut(cacheNames = "com.alfred.system.service.impl.DeptServiceImpl",key = "#result.id")
     @Override
     public Dept saveDept(Dept dept) {
          this.deptMapper.insert(dept);
@@ -50,6 +54,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         return this.deptMapper.queryDeptMaxOrderNum();
     }
 
+    @CachePut(cacheNames = "com.alfred.system.service.impl.DeptServiceImpl",key = "#result.id")
     @Override
     public Dept updateDept(Dept dept) {
         this.deptMapper.updateById(dept);
@@ -60,13 +65,13 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
     public Integer queryDeptChildrenCountById(Integer id) {
         return null;
     }
-
+    @Cacheable(cacheNames = "com.alfred.system.service.impl.DeptServiceImpl",key = "#id")
     @Override
     public Dept getById(Serializable id) {
         return super.getById(id);
     }
 
-    //@CacheEvict
+    @CacheEvict(cacheNames = "com.alfred.system.service.impl.DeptServiceImpl",key = "#id")
     @Override
     public boolean removeById(Serializable id) {
         return super.removeById(id);

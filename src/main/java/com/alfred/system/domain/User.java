@@ -4,13 +4,15 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
 @author  Alfred
@@ -61,6 +63,7 @@ public class User implements Serializable {
      * 密码
      */
     @TableField(value = "pwd")
+    @JsonIgnore  //生成json串时不序列化
     private String pwd;
 
     /**
@@ -69,11 +72,15 @@ public class User implements Serializable {
     @TableField(value = "deptid")
     private Integer deptid;
 
+    @TableField(exist = false)
+    private String deptname;
+
     /**
      * 入职时间
      */
     @TableField(value = "hiredate")
-    @JsonFormat(pattern = "yyyy:MM:dd",timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date hiredate;
 
     @TableField(value = "ordernum")
@@ -95,10 +102,11 @@ public class User implements Serializable {
      * 盐
      */
     @TableField(value = "salt")
+    @JsonIgnore  //生成json串时不序列化
     private String salt;
 
     /**
-     *  是否可用
+     * 是否可用
      */
     @TableField(value = "available")
     private Integer available;

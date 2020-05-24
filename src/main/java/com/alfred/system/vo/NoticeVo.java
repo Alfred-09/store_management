@@ -2,6 +2,7 @@ package com.alfred.system.vo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -13,6 +14,7 @@ import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
+@EnableCaching 
 public class NoticeVo extends  BaseVo{
 
     private String title;

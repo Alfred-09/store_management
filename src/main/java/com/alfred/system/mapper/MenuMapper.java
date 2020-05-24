@@ -8,4 +8,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 @date  2020/4/27 12:14
 */
 public interface MenuMapper extends BaseMapper<Menu> {
+    Integer queryMenuMaxOrderNum();
+
+    Integer queryMenuChildrenCountById(Integer id);
 }

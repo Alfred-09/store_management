@@ -38,4 +38,14 @@ public class Contant {
      */
     public static final Integer SPREAD_TRUE=1;
     public static final Integer SPREAD_FALSE=0;
+
+    /**
+     * 初始密码
+     */
+    public static final String DEFAULT_PWD = "123456";
+
+    /**
+     * 默认的头像地址
+     */
+    public static final String DEFAULT_TITLE_IMAGE = "";
 }
