@@ -56,7 +56,6 @@ private RoleMapper roleMapper;
     }
     qw.eq("loginname",loginname);
     User user = userMapper.selectOne(qw);
-    System.out.println("2285439455 = " + user);
     return user;
   }
   @Override

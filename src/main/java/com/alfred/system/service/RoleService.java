@@ -25,4 +25,7 @@ public interface RoleService extends IService<Role>{
         void saveRoleMenu(Integer rid, Integer[] mids);
 
         DataGridView queryAllAvailableRoleNoPage(RoleVo roleVo);
+
+        List<String> queryRoleNamesByUserId(Integer id);
+
 }

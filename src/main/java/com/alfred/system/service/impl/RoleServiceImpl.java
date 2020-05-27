@@ -1,5 +1,6 @@
 package com.alfred.system.service.impl;
 
+import com.alfred.system.common.Contant;
 import com.alfred.system.common.DataGridView;
 import com.alfred.system.domain.Role;
 import com.alfred.system.mapper.RoleMapper;
@@ -110,6 +111,33 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             lists.add(map);
         }
         return new DataGridView(Long.valueOf(lists.size()),lists);
+    }
+
+    /**
+     * 根据用户ID查询角色名称的集合
+     * @param id
+     * @return
+     */
+    @Override
+    public List<String> queryRoleNamesByUserId(Integer id) {
+        //根据用户ID查询角色ID的集合
+        List<Integer> roleIds=this.roleMapper.queryRoleIdsByUserId(id);
+
+        if(null!=roleIds&&roleIds.size()>0){
+            QueryWrapper<Role> qw=new QueryWrapper<>();
+            qw.eq("available", Contant.AVAILABLE_TRUE);
+            qw.in("id",roleIds);
+            List<Role> rolesObject=this.roleMapper.selectList(qw);
+            List<String> roles=new ArrayList<>();
+            for (Role role : rolesObject) {
+                roles.add(role.getName());
+            }
+
+            return roles;
+
+        }else {
+            return null;
+        }
     }
 
 }

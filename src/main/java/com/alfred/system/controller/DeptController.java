@@ -6,6 +6,7 @@ import com.alfred.system.common.ResultObj;
 import com.alfred.system.domain.Dept;
 import com.alfred.system.service.DeptService;
 import com.alfred.system.vo.DeptVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,6 +52,7 @@ public class DeptController {
      * @return
      */
     @PostMapping("addDept")
+    @RequiresPermissions("dept:add")
     public ResultObj addDept(Dept dept){
         try {
             dept.setSpread(Contant.SPREAD_FALSE);
@@ -63,6 +65,7 @@ public class DeptController {
         }
     }
     @PostMapping("updateDept")
+    @RequiresPermissions("dept:update")
     public ResultObj updateDept(Dept dept){
         try {
             this.deptService.updateDept(dept);
@@ -86,6 +89,7 @@ public class DeptController {
         return new DataGridView(this.deptService.getById(id));
     }
     @RequestMapping("deleteDept")
+    @RequiresPermissions("dept:delete")
     public ResultObj deleteDept(Integer id){
         try {
             this.deptService.removeById(id);

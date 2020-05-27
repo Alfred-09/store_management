@@ -47,25 +47,28 @@ public class LoginController {
   public ResultObj doLogin(String loginname, String password, HttpServletRequest request){
 
     try {
-      Subject subject = SecurityUtils.getSubject();
-      //分装用户的数据
-      UsernamePasswordToken loginToken = new UsernamePasswordToken(loginname,password);
-      subject.login(loginToken);
-      //ActiveUser activeUser = (ActiveUser) subject.getPrincipal();
-      //得到shiro的sessionid==token
-      String token = subject.getSession().getId().toString();
-      //记录登录日志
-      ActiveUser activeUser = (ActiveUser) subject.getPrincipal();
-      //得到用户的信息
-      User user = activeUser.getUser();
+        Subject subject= SecurityUtils.getSubject();
+        UsernamePasswordToken loginToken=new UsernamePasswordToken(loginname,password);
+        subject.login(loginToken);
+        //ActiveUser activeUser= (ActiveUser) subject.getPrincipal();
+        //得到shiro的sessionid==token
+        String token = subject.getSession().getId().toString();
+        //写入登陆日志
+        ActiveUser activeUser= (ActiveUser) subject.getPrincipal();
+        User user=activeUser.getUser();
+        Loginfo loginfo=new Loginfo();
+        loginfo.setLoginname(user.getName()+"-"+user.getLoginname());
+        loginfo.setLoginip(request.getRemoteAddr());
+        loginfo.setLogintime(new Date());
+        loginfoService.save(loginfo);
+        List<String> permissions = activeUser.getPermissions();
 
-      Loginfo loginfo = new Loginfo();
-      loginfo.setLoginname(user.getName()+"-"+user.getLoginname());
-      loginfo.setLoginip(request.getRemoteAddr());
-      loginfo.setLogintime(new Date());
-      loginfoService.save(loginfo);
-      //成功的话
-      return new ResultObj(200,"登录成功",token);
+        Map<String,Object> map=new HashMap<>();
+        map.put("token",token);
+        map.put("permissions",permissions);
+        map.put("usertype",user.getType());
+        map.put("username",user.getName());
+        return new ResultObj(200,"登陆成功",map);
     } catch (AuthenticationException e) {
       e.printStackTrace();
       return new ResultObj(-1,"用户名或密码不正确");

@@ -32,7 +32,7 @@ public class ResultObj {
 
     private Integer code=200;
     private String msg = "";
-    private String token = "";
+    private Object token = "";
 
   //public static final String LOGIN_SUCCESS = "LOGIN_SUCCESS";
 
