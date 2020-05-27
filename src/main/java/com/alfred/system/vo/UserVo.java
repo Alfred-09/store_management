@@ -15,6 +15,6 @@ public class UserVo extends  BaseVo{
      private String address;
      private String remark;
      private Integer deptid;
-     private Integer available;
+
 
 }

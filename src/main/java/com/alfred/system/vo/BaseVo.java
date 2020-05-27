@@ -8,6 +8,8 @@ import lombok.Data;
  */
 @Data
 public class BaseVo {
+
+    private Integer available;
     private Integer page;
     private Integer limit;
 }

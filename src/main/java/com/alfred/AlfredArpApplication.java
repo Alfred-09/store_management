@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
-@MapperScan(basePackages = {"com.alfred.system.mapper"})
+@MapperScan(basePackages = {"com.alfred.system.mapper","com.alfred.business.mapper"})
 @EnableCaching
 public class AlfredArpApplication {
 

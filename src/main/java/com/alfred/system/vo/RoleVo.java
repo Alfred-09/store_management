@@ -15,5 +15,5 @@ public class RoleVo extends  BaseVo{
      private Integer userId;
      private String name;
      private String remark;
-     private Integer available;
+
 }
