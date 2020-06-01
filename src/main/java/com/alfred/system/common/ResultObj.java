@@ -30,6 +30,8 @@ public class ResultObj {
     public static final ResultObj DISPATH_SUCCESS = new ResultObj(200,"分配成功");
     public static final ResultObj DISPATH_ERROR = new ResultObj(-1,"分配失败");
 
+
+
     private Integer code=200;
     private String msg = "";
     private Object token = "";

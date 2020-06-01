@@ -43,7 +43,19 @@ public class FileController {
         User user = activeUser.getUser();
         user.setImgpath(path);
         userService.updateUser(user);
-        System.out.println("map*********************************** = " + map);
+        //System.out.println("map*********************************** = " + map);
+        return new DataGridView(map);
+    }
+    /**
+     * 上传文件
+     */
+    @RequestMapping("uploadGoodsFile")
+    public Object uploadGoodsFile(MultipartFile mf){
+
+        String path = this.uploadService.uploadImage(mf);
+
+        Map<String,String> map=new HashMap<>();
+        map.put("src",path);
         return new DataGridView(map);
     }
 }

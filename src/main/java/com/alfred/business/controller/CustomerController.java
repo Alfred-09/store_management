@@ -6,6 +6,7 @@ import com.alfred.business.vo.CustomerVo;
 import com.alfred.system.common.Contant;
 import com.alfred.system.common.ResultObj;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -99,6 +100,14 @@ public class CustomerController {
             return ResultObj.DELETE_ERROR;
         }
 
+    }
+
+    /**
+     * @return 查询所有可用的客户
+     */
+    @GetMapping("getAllAvailableCustomer")
+    public Object getAllAvailableCustomer(){
+        return this.customerService.getAllAvailableCustomer();
     }
 
 

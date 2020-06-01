@@ -7,6 +7,7 @@ import com.alfred.business.vo.ProviderVo;
 import com.alfred.system.common.Contant;
 import com.alfred.system.common.ResultObj;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -101,6 +102,11 @@ public class ProviderController {
         }
 
     }
-
-
+    /**
+     * 查询所有可用的供应商，不分页
+     */
+    @GetMapping("getAllAvailableProvider")
+    public Object getAllAvailableProvider(){
+        return this.providerService.getAllAvailableProvider();
+    }
 }

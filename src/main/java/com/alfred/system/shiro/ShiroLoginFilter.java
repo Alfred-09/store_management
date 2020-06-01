@@ -32,6 +32,6 @@ public class ShiroLoginFilter extends FormAuthenticationFilter {
         PrintWriter out= response.getWriter();
         //使用fastjson的对象转化方法
         out.write(JSONObject.toJSON(resultData).toString());
-        return true;
+        return false;
     }
 }

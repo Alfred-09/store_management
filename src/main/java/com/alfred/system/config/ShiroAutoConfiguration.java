@@ -1,6 +1,7 @@
 package com.alfred.system.config;
 
 import com.alfred.system.realm.UserRealm;
+import com.alfred.system.shiro.ShiroLoginFilter;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
@@ -24,6 +25,7 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+import javax.servlet.Filter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -96,9 +98,9 @@ public class ShiroAutoConfiguration {
         bean.setUnauthorizedUrl(shiroProperties.getUnauthorizedUrl());
 //        //创建自定义filter
 //        OptionsAccessControlFilter filter=new OptionsAccessControlFilter();
-//        Map<String, Filter> map=new HashMap<>();
-//        map.put("options",filter);
-//        bean.setFilters(map);
+        Map<String, Filter> map=new HashMap<>();
+        map.put("authc",new ShiroLoginFilter());
+        bean.setFilters(map);
 
         //注入过滤器
         Map<String, String> filterChainDefinition=new HashMap<>();

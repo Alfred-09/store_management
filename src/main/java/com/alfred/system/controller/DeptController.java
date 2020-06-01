@@ -64,6 +64,7 @@ public class DeptController {
             return ResultObj.ADD_ERROR;
         }
     }
+
     @PostMapping("updateDept")
     @RequiresPermissions("dept:update")
     public ResultObj updateDept(Dept dept){
@@ -75,6 +76,7 @@ public class DeptController {
             return ResultObj.UPDATE_ERROR;
         }
     }
+
     /**
      * 根据ID查询当前部门的子部门的个数
      */

@@ -16,4 +16,6 @@ public interface ProviderService extends IService<Provider>{
         Provider saveProvider(Provider provider);
 
         Provider updateProvider(Provider provider);
+
+        DataGridView getAllAvailableProvider();
     }

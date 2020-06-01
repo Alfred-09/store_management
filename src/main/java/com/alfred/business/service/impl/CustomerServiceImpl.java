@@ -1,9 +1,12 @@
 package com.alfred.business.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import com.alfred.business.domain.Customer;
 import com.alfred.business.mapper.CustomerMapper;
 import com.alfred.business.service.CustomerService;
 import com.alfred.business.vo.CustomerVo;
+import com.alfred.system.common.Contant;
 import com.alfred.system.common.DataGridView;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -11,6 +14,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -45,22 +51,39 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         this.customerMapper.selectPage(page,qw);
         return new DataGridView(page.getTotal(),page.getRecords());
     }
-
+    @CachePut(cacheNames = "com.alfred.business.service.impl.CustomerServiceImpl",key = "#result.id")
     @Override
     public Customer saveCustomer(Customer customer) {
         this.customerMapper.insert(customer);
         return customer;
     }
-
+    @CachePut(cacheNames = "com.alfred.business.service.impl.CustomerServiceImpl",key = "#result.id")
     @Override
     public Customer updateCustomer(Customer customer) {
-        this.customerMapper.updateById(customer);
-        return customer;
+        Customer selectById = this.customerMapper.selectById(customer.getId());
+        BeanUtil.copyProperties(customer,selectById, CopyOptions.create().setIgnoreNullValue(true).setIgnoreError(true));
+        this.customerMapper.updateById(selectById);
+        return selectById;
     }
 
+    @Override
+    public DataGridView getAllAvailableCustomer() {
+        QueryWrapper<Customer>qw = new QueryWrapper<>();
+        qw.eq("available", Contant.AVAILABLE_TRUE);
+        return new DataGridView(this.customerMapper.selectList(qw));
+    }
+
+    @CacheEvict(cacheNames = "com.alfred.business.service.impl.CustomerServiceImpl",key = "#id")
     @Override
     public boolean removeById(Serializable id) {
         return super.removeById(id);
     }
+
+    @Cacheable(cacheNames = "com.alfred.business.service.impl.CustomerServiceImpl",key = "#id")
+    @Override
+    public Customer getById(Serializable id) {
+        return super.getById(id);
+    }
 }
+
 

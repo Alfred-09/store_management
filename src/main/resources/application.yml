@@ -15,10 +15,10 @@ spring:
       validation-query: select 1
       stat-view-servlet:
         enabled: true
-        login-username: admin
-        login-password: 123456
-        allow:
-        deny:
+#        login-username: admin
+#        login-password: 123456
+#        allow:
+#        deny:
         url-pattern: "/druid/*"
   jackson:
     date-format: yyyy:MM-dd HH:mm:ss
@@ -40,16 +40,13 @@ shiro:
   login-url: /index.html
   unauthorized-url: /unauthorized.html
   anon-urls:
-    - /**
-    - /index.html*
-    - /login/login*
-    - /resources/**
+#    放行
+    - /login/doLogin*
+    - /druid/**
+    - /login/captcha
   logout-url: /login/logout*
   authc-urls:
-#    - /**
-
-
-
+    - /**
 #mybatisplus的配置
 mybatis-plus:
   configuration:
