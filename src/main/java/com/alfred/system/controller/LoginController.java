@@ -77,6 +77,8 @@ public class LoginController {
                   loginfo.setLoginip(request.getRemoteAddr());
                   loginfo.setLogintime(new Date());
                   loginfoService.save(loginfo);
+
+
                   List<String> permissions = activeUser.getPermissions();
 
                   Map<String, Object> map = new HashMap<>();
@@ -84,7 +86,9 @@ public class LoginController {
                   map.put("permissions", permissions);
                   map.put("usertype", user.getType());
                   map.put("username", user.getName());
+
                   return new ResultObj(200, "登陆成功", map);
+
               } else {
                   return new ResultObj(-1, "验证码出错");
               }
@@ -162,5 +166,4 @@ public class LoginController {
         opsForValue.getOperations().expire(codeKey,60, TimeUnit.SECONDS);
         captcha.write(response.getOutputStream());
     }
-
 }

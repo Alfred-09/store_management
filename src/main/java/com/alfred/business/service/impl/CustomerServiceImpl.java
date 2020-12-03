@@ -40,13 +40,8 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         qw.like(StringUtils.isNotBlank(customerVo.getCustomername()),"customername",customerVo.getCustomername());
         qw.like(StringUtils.isNotBlank(customerVo.getConnectionperson()),"connectionperson",customerVo.getConnectionperson());
         if(StringUtils.isNotBlank(customerVo.getPhone())){
-            qw.and(new Consumer<QueryWrapper<Customer>>() {
-                @Override
-                public void accept(QueryWrapper<Customer> customerQueryWrapper) {
-                    customerQueryWrapper.like(StringUtils.isNotBlank(customerVo.getPhone()),"phone",customerVo.getPhone())
-                            .or().like(StringUtils.isNotBlank(customerVo.getPhone()),"telephone",customerVo.getPhone());
-                }
-            });
+            qw.and(customerQueryWrapper -> customerQueryWrapper.like(StringUtils.isNotBlank(customerVo.getPhone()),"phone",customerVo.getPhone())
+                    .or().like(StringUtils.isNotBlank(customerVo.getPhone()),"telephone",customerVo.getPhone()));
         }
         this.customerMapper.selectPage(page,qw);
         return new DataGridView(page.getTotal(),page.getRecords());

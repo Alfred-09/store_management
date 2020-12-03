@@ -8,6 +8,7 @@ import com.alfred.system.service.RoleService;
 import com.alfred.system.vo.RoleVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,7 +51,7 @@ public class RoleController {
      * @return
      */
     @PostMapping("addRole")
-    public ResultObj addRole(Role role){
+    public ResultObj addRole( Role role){
         try {
             role.setCreatetime(new Date());
             role.setAvailable(Contant.AVAILABLE_TRUE);
